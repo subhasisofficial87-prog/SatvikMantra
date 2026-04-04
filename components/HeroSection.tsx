@@ -1,9 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Leaf, Droplet } from 'lucide-react';
+import { Leaf, Droplet, Play } from 'lucide-react';
+import { useState } from 'react';
 
 export default function HeroSection() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -64,7 +67,7 @@ export default function HeroSection() {
               variants={itemVariants}
               className="text-lg text-gray-700 mb-8 leading-relaxed max-w-lg"
             >
-              Handcrafted cold-pressed oils and desi ghee made with traditional methods. Pure, organic, and blessed with Ayurvedic benefits for your wellness journey.
+              Handcrafted cold-pressed oils and desi ghee made with traditional methods. Extracted from pristine farming lands using time-honored wooden mills. Pure, organic, and blessed with Ayurvedic benefits for your wellness journey.
             </motion.p>
 
             <motion.div
@@ -116,7 +119,7 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right Image */}
+          {/* Right Video Section */}
           <motion.div
             variants={itemVariants}
             className="relative h-96 md:h-full min-h-96"
@@ -126,14 +129,46 @@ export default function HeroSection() {
               transition={{ duration: 4, repeat: Infinity }}
               className="relative h-full"
             >
-              <div className="relative h-full rounded-3xl overflow-hidden shadow-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1587849212617-d2acd65d6de7?w=600&h=600&fit=crop"
-                  alt="Premium Oils"
+              <div className="relative h-full rounded-3xl overflow-hidden shadow-2xl bg-black">
+                {/* Video Background */}
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
                   className="w-full h-full object-cover"
-                />
+                  poster="https://images.unsplash.com/photo-1587849212617-d2acd65d6de7?w=600&h=600&fit=crop"
+                >
+                  {/* Premium oil extraction video from Unsplash */}
+                  <source
+                    src="https://videos.unsplash.com/video-static/converted/84d04ac3b2c0fde3f8c0f1a1c8c2f5e5-hd.mp4"
+                    type="video/mp4"
+                  />
+                  {/* Fallback to image */}
+                  <img
+                    src="https://images.unsplash.com/photo-1587849212617-d2acd65d6de7?w=600&h=600&fit=crop"
+                    alt="Premium Oils"
+                    className="w-full h-full object-cover"
+                  />
+                </video>
+
                 {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#556B2F]/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#556B2F]/30 to-transparent"></div>
+
+                {/* Play button overlay */}
+                <motion.button
+                  onClick={() => setIsVideoOpen(true)}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="absolute inset-0 flex items-center justify-center group"
+                >
+                  <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white transition-all duration-300 shadow-lg group-hover:shadow-xl">
+                    <Play
+                      size={40}
+                      className="text-[#556B2F] fill-[#556B2F] ml-1"
+                    />
+                  </div>
+                </motion.button>
               </div>
             </motion.div>
 
@@ -144,11 +179,48 @@ export default function HeroSection() {
               className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl max-w-xs"
             >
               <p className="text-sm text-gray-600 mb-2">⭐ Trusted by 5000+ customers</p>
-              <p className="text-xs text-gray-500">Traditional methods, Modern quality</p>
+              <p className="text-xs text-gray-500">Traditional wooden mill extraction</p>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Video Modal */}
+      {isVideoOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setIsVideoOpen(false)}
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-4xl"
+          >
+            <button
+              onClick={() => setIsVideoOpen(false)}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 z-51"
+            >
+              ✕
+            </button>
+            <video
+              autoPlay
+              controls
+              className="w-full h-auto rounded-2xl"
+            >
+              <source
+                src="https://videos.unsplash.com/video-static/converted/84d04ac3b2c0fde3f8c0f1a1c8c2f5e5-hd.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 }
