@@ -1,7 +1,7 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Leaf } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { formatPrice } from '@/lib/utils';
 import { Product } from '@/types';
 
@@ -12,43 +12,88 @@ interface Props {
 
 export default function ProductCard({ product, onAddToCart }: Props) {
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden">
-      <Link href={`/products/${product._id}`}>
-        <div className="relative h-48 w-full bg-gray-100">
-          <img
+    <motion.div
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+      className="h-full"
+    >
+      <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden h-full flex flex-col">
+        {/* Image Container */}
+        <Link href={`/products/${product._id}`} className="relative h-56 w-full bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden group">
+          <motion.img
             src={product.image || 'https://via.placeholder.com/400x400?text=Product'}
             alt={product.name}
-            className="w-full h-full object-cover hover:scale-105 transition duration-300"
+            className="w-full h-full object-cover"
+            whileHover={{ scale: 1.12 }}
+            transition={{ duration: 0.4 }}
           />
-        </div>
-      </Link>
 
-      <div className="p-4">
-        <Link href={`/products/${product._id}`}>
-          <h3 className="font-serif text-lg font-bold text-[#2F4F2F] hover:text-[#556B2F]">
-            {product.name}
-          </h3>
+          {/* Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+            className="absolute inset-0 bg-black/30 flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileHover={{ scale: 1, opacity: 1 }}
+              className="text-white font-bold text-sm"
+            >
+              View Details
+            </motion.div>
+          </motion.div>
+
+          {/* Badge */}
+          {product.stock <= 5 && product.stock > 0 && (
+            <div className="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+              Low Stock
+            </div>
+          )}
+          {product.stock === 0 && (
+            <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+              Out of Stock
+            </div>
+          )}
         </Link>
 
-        <p className="text-gray-600 text-sm mt-2 line-clamp-2">{product.description}</p>
+        {/* Content */}
+        <div className="p-6 flex flex-col flex-grow">
+          <Link href={`/products/${product._id}`}>
+            <h3 className="font-serif text-xl font-bold text-[#2F4F2F] hover:text-[#556B2F] transition mb-2 line-clamp-2">
+              {product.name}
+            </h3>
+          </Link>
 
-        <div className="mt-4 flex justify-between items-center">
-          <span className="text-2xl font-bold text-[#556B2F]">{formatPrice(product.price)}</span>
-          <button
-            onClick={() => onAddToCart?.(product)}
-            className="bg-[#556B2F] text-white p-2 rounded-lg hover:bg-[#2F4F2F]"
-          >
-            <ShoppingCart size={20} />
-          </button>
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">
+            {product.description}
+          </p>
+
+          {/* Benefits tag */}
+          <div className="flex items-center gap-2 mb-4 text-xs text-[#556B2F]">
+            <Leaf size={14} />
+            <span>{product.extractionMethod}</span>
+          </div>
+
+          {/* Footer */}
+          <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+            <motion.span
+              className="text-2xl font-bold bg-gradient-to-r from-[#556B2F] to-[#8B5E3C] bg-clip-text text-transparent"
+            >
+              {formatPrice(product.price)}
+            </motion.span>
+
+            <motion.button
+              onClick={() => onAddToCart?.(product)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              disabled={product.stock === 0}
+              className="bg-gradient-to-r from-[#556B2F] to-[#2F4F2F] text-white p-3 rounded-xl hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <ShoppingCart size={20} />
+            </motion.button>
+          </div>
         </div>
-
-        {product.stock <= 5 && product.stock > 0 && (
-          <p className="text-red-600 text-xs mt-2">Only {product.stock} left!</p>
-        )}
-        {product.stock === 0 && (
-          <p className="text-red-600 text-xs mt-2">Out of Stock</p>
-        )}
       </div>
-    </div>
+    </motion.div>
   );
 }
