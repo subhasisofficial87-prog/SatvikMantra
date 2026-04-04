@@ -12,12 +12,9 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-3 group">
             <img
-              src="https://imgur.com/placeholder.png"
+              src="/images/satvik-mantra-logo.png"
               alt="Satvik Mantra Logo"
               className="h-10 w-10 object-contain group-hover:scale-110 transition-transform duration-300"
-              onError={(e) => {
-                e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%2295%22 fill=%22%23556B2F%22/%3E%3Cpath d=%22M100 40 L140 160 L60 160 Z%22 fill=%22%23F5F5DC%22/%3E%3C/svg%3E';
-              }}
             />
             <span className="hidden sm:inline font-serif text-lg font-bold text-[#2F4F2F]">Satvik Mantra</span>
           </Link>

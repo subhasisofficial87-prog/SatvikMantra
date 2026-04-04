@@ -10,12 +10,9 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <img
-                src="https://imgur.com/placeholder.png"
+                src="/images/satvik-mantra-logo.png"
                 alt="Satvik Mantra Logo"
                 className="h-8 w-8 object-contain brightness-0 invert"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
               />
               <h3 className="font-serif text-xl font-bold">Satvik Mantra</h3>
             </div>
