@@ -20,10 +20,10 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex space-x-8 items-center">
-            <Link href="/" className="hover:text-[#556B2F]">Home</Link>
-            <Link href="/products" className="hover:text-[#556B2F]">Products</Link>
-            <Link href="/blog" className="hover:text-[#556B2F]">Blog</Link>
-            <Link href="/cart" className="bg-[#556B2F] text-white px-4 py-2 rounded-lg hover:bg-[#2F4F2F] flex items-center space-x-2">
+            <Link href="/" className="text-gray-800 hover:text-[#556B2F] transition-colors duration-300 font-medium">Home</Link>
+            <Link href="/products" className="text-gray-800 hover:text-[#556B2F] transition-colors duration-300 font-medium">Products</Link>
+            <Link href="/about" className="text-gray-800 hover:text-[#556B2F] transition-colors duration-300 font-medium">About Us</Link>
+            <Link href="/cart" className="bg-[#556B2F] text-white px-4 py-2 rounded-lg hover:bg-[#2F4F2F] flex items-center space-x-2 transition-colors duration-300">
               <ShoppingCart size={18} />
               <span>Cart</span>
             </Link>
@@ -36,10 +36,10 @@ export default function Navbar() {
 
         {isOpen && (
           <div className="md:hidden pb-4 space-y-2">
-            <Link href="/" className="block py-2 hover:text-[#556B2F]">Home</Link>
-            <Link href="/products" className="block py-2 hover:text-[#556B2F]">Products</Link>
-            <Link href="/blog" className="block py-2 hover:text-[#556B2F]">Blog</Link>
-            <Link href="/cart" className="block py-2 bg-[#556B2F] text-white px-4 rounded-lg">Cart</Link>
+            <Link href="/" className="block py-2 text-gray-800 hover:text-[#556B2F] transition-colors duration-300">Home</Link>
+            <Link href="/products" className="block py-2 text-gray-800 hover:text-[#556B2F] transition-colors duration-300">Products</Link>
+            <Link href="/about" className="block py-2 text-gray-800 hover:text-[#556B2F] transition-colors duration-300">About Us</Link>
+            <Link href="/cart" className="block py-2 bg-[#556B2F] text-white px-4 rounded-lg hover:bg-[#2F4F2F] transition-colors duration-300">Cart</Link>
           </div>
         )}
       </div>
